@@ -17,33 +17,44 @@
     }
 
     /* Estilos do container do formulário */
-    .form-container {
+    .form-container, .confirmation-container {
       background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
       padding: 20px;
-      width: 100%;
-      max-width: 400px;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
     /* Título */
-    .form-container h1 {
-      text-align: center;
+    .form-container h1, .confirmation-container h1 {
       color: #00468c; /* Azul Flash Code */
       margin-bottom: 20px;
     }
 
-    /* Estilos dos campos */
-    .form-container label {
-      font-weight: bold;
-      color: #00468c;
+    /* Contêiner dos campos */
+    .input-group {
+      width: 80vh; /* Ajuste a largura conforme necessário */
+      margin-bottom: 15px;
     }
 
-    .form-container input[type="text"],
-    .form-container input[type="email"] {
+    /* Estilos das labels */
+    .input-group label {
+      font-weight: bold;
+      color: #00468c;
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    /* Estilos dos campos */
+    .input-group input[type="text"],
+    .input-group input[type="email"] {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
@@ -51,49 +62,107 @@
 
     /* Botão Enviar */
     .form-container button {
-      width: 100%;
-      padding: 10px;
+      width: 40vh; /* Reduzindo a largura do botão */
+      padding: 15px; /* Aumentando o padding para deixá-lo mais robusto */
       background-color: #00468c;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
+      font-weight: bold; /* Tornando o texto mais grosso */
       margin-top: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto; /* Centralizando o botão */
     }
 
     .form-container button:hover {
       background-color: #003366;
     }
+
+    /* Estilo da logo */
+    .logo {
+      width: 150px; /* Ajuste o tamanho conforme necessário */
+      margin-bottom: 20px;
+    }
+
+    /* Estilo da tela de confirmação */
+    .confirmation-container {
+      display: none; /* Oculta a tela de confirmação inicialmente */
+    }
+
+    .confirmation-message {
+      font-size: 18px;
+      color: #00468c;
+    }
   </style>
+  <script>
+    // Função para exibir o pop-up de confirmação e depois mostrar a nova tela
+    function mostrarPopup() {
+      alert("Matrícula recebida com sucesso! A equipe Flash Code agradece seu empenho nos estudos.");
+      document.querySelector('.form-container').style.display = 'none'; // Esconde o formulário
+      document.querySelector('.confirmation-container').style.display = 'flex'; // Mostra a tela de confirmação
+
+      // Após 10 segundos, volta para o formulário em branco
+      setTimeout(function() {
+        document.querySelector('.confirmation-container').style.display = 'none'; // Esconde a tela de confirmação
+        document.querySelector('.form-container').style.display = 'flex'; // Mostra o formulário novamente
+        document.querySelector('form').reset(); // Limpa os campos do formulário
+      }, 10000); // 10000 ms = 10 segundos
+    }
+  </script>
 </head>
 <body>
   <div class="form-container">
+    <!-- Logo -->
+    <img src="logo.png" alt="Flash Code Logo" class="logo">
+    
     <h1>Ambiente de Testes - Flash Code</h1>
-    <form>
-      <label for="nome">Noome</label>
-      <input type="text" id="nome" name="nome" required>
+    <form onsubmit="mostrarPopup(); return false;">
+      <div class="input-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
 
-      <label for="telifone">Telefone</label>
-      <input type="text" id="telefone" name="telefone" required>
+      <div class="input-group">
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" name="telefone" required>
+      </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
 
-      <label for="cpF">CPF</label>
-      <input type="text" id="cpf" name="cpf" required>
+      <div class="input-group">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" required>
+      </div>
 
-      <label for="rg">RG</label>
-      <input type="text" id="rg" name="rg" required>
+      <div class="input-group">
+        <label for="rg">RG</label>
+        <input type="text" id="rg" name="rg" required>
+      </div>
 
-      <label for="cep">CIP</label>
-      <input type="text" id="cep" name="cep" required>
+      <div class="input-group">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" name="cep" required>
+      </div>
 
-      <label for="endereco">Endereço</label>
-      <input type="text" id="endereco" name="endereco" required>
+      <div class="input-group">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" required>
+      </div>
 
-      <button type="submit">Envia</button>
+      <button type="submit">Enviar</button>
     </form>
+  </div>
+
+  <div class="confirmation-container">
+    <img src="logo.png" alt="Flash Code Logo" class="logo">
+    <h1>Confirmação de Matrícula</h1>
+    <p class="confirmation-message">Dados recebidos com sucesso! A equipe Flash Code agradece seu empenho nos estudos.</p>
   </div>
 </body>
 </html>
